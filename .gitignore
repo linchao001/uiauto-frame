@@ -1,0 +1,22 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+test-results/
+*.egg-info/
+dist/
+build/
+.coverage
+htmlcov/
+playwright-report/
+reports/
+.cursor
+.idea
+
+# 设备凭据与真实业务路径：只保留 *.yaml.example，本地复制后填写
+**/config/env/*.yaml
+**/config/env/*.yml
+!**/config/env/*.yaml.example
+!**/config/env/*.yml.example

@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pilot-framework"
+version = "0.1.2"
+description = "Stable, product-agnostic Web UI automation framework with business-level Actions DSL"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "Pilot" }]
+dependencies = [
+  "playwright>=1.40.0",
+  "pytest>=7.4.0",
+  "PyYAML>=6.0",
+  "PyMySQL>=1.1.0",
+  "paramiko>=3.0.0",
+  "pytest-html>=4.1.0",
+  "allure-pytest>=2.13.0",
+  "pytest-cov>=4.1.0",
+  "ruff>=0.1.0",
+]
+
+[project.scripts]
+pilot = "pilot.cli:main"
+
+[project.entry-points.pytest11]
+pilot = "pilot.pytest_plugin"
+
+[tool.hatch.build.hooks.custom]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pilot"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/pilot", "README.md", "docs/to-agent", "hatch_build.py"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra --strict-markers"
+markers = [
+  "smoke: quick smoke tests",
+  "regression: full regression",
+  "device(*names): run only when --env/--pilot-env matches one of the given device names",
+  "P0: highest priority case (filter via -m P0 or --priority P0)",
+  "P1: high priority case (filter via -m P1 or --priority P1)",
+  "P2: medium priority case (filter via -m P2 or --priority P2)",
+  "P3: low priority case (filter via -m P3 or --priority P3)",
+  "case_title(case_id=..., title=...): case id and human-readable title for reports",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
